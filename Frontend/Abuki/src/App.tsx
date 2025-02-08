@@ -1,11 +1,15 @@
+import { Outlet } from "react-router-dom";
+import Aside from "./components/Aside";
+import Navbar from "./components/Navbar";
 import "./index.css";
-import Dashboard from "./pages/Dashboard";
-import LoginPage from "./pages/LoginPage";
+
 
 const App = ()=> {
   return (
     <>
-      <Dashboard />
+      <Navbar />
+      <Aside />
+      <Outlet/> 
     </>
   );
 };
