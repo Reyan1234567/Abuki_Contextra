@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
 const connect = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://reyan:vbnvbnVBN1@abuki.bg27l.mongodb.net/Abuki"
-    );
-    console.log("mongodb connected successfully")
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("mongodb connected successfully");
   } catch (err) {
     console.log("couldn't connect to mongodb ", err.message);
   }
 };
 
-export default connect
+export default connect;
