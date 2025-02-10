@@ -1,8 +1,7 @@
-export default createinventorySchema = {
+export const createinventorySchema = {
   paint_id: {
     notEmpty: { errorMessage: "paint_id shouldn't be empty" },
     isString: { errorMessage: "paint_id should be a string" },
-    isUnique: { errorMessage: "paint_id should unique" },
     isLength: {
       options: {
         min: 4,

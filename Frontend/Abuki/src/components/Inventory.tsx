@@ -2,9 +2,12 @@ import { Link } from "react-router-dom";
 
 
 interface Paint {
-  id: string;
+  _id:string;
+  paint_id: string;
   name: string;
-  price: number;
+  brand: string;
+  color:string;
+  notes:string;
 }
 interface Props {
   paint: Paint[];
@@ -13,19 +16,26 @@ interface Props {
 }
 const Inventory = ({ paint, onDelete, onUpdate}: Props) => {
   return (
-    <table className="table">
+    <table className="table table-bordered">
       <thead>
-        <th scope="col">name</th>
-        <th scope="col">price</th>
+      <th>Paint id</th>
+      <th>Name</th>
+      <th>Brand</th>
+      <th>Color</th>
+      <th>Notes</th>
+      <th> </th>
       </thead>
       <tbody>
         {paint.map((pain) => (
-          <tr>
+          <tr key={pain._id}>
+            <td>{pain.paint_id}</td>
             <td>{pain.name}</td>
-            <td>{pain.price}</td>
+            <td>{pain.brand}</td>
+            <td>{pain.color}</td>
+            <td>{pain.notes}</td>
             <td>
-                <Link to="/InventoryForm/:id"><button onClick={()=>{onUpdate(pain.id)}} className="btn btn-warning">Edit</button></Link>
-                <button className="btn btn-danger" onClick={()=>onDelete(pain.id)}>Delete</button>
+                <Link to={`/InventoryForm/${pain._id}`}><button onClick={()=>{onUpdate(pain._id)}} className="btn btn-warning">Edit</button></Link>
+                <button className="btn btn-danger" onClick={()=>onDelete(pain._id)}>Delete</button>
               </td>
           </tr>
         ))}

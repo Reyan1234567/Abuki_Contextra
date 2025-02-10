@@ -1,8 +1,7 @@
 import { Router } from "express";
 import Inventory from "../models/inventoryModel.js";
-import {body, validationResult,checkSchema} from "express-validator"
-import "../Schema/inventorySchema"
-
+import { body, validationResult, checkSchema } from "express-validator";
+import { createinventorySchema } from "../Schemas/inventorySchema.js";
 
 const router = Router();
 
@@ -15,65 +14,99 @@ router.get("/api/inventory", async (req, res) => {
   }
 });
 
-router.get("api/inventory/:id",async(req,res)=>{
-    const {params:{id}}=req
-    try{
-        const inventory=await Inventory.findById(id)
-        if(!inventory){
-            res.send("couldn't find item with this id").status(404)
-        }
+router.get("/api/inventory/:id", async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  try {
+    const inventory = await Inventory.findById(id);
+    if (!inventory) {
+      res.send("couldn't find item with this id").status(404);
+    } else {
+      res.send(inventory).status(200);
     }
-    catch(err){
-        console.lof(err.messgae)
-        res.send(err).status(500)
-    }
+  } catch (err) {
+    console.log(err.messgae);
+    res.send(err).status(500);
+  }
+});
 
-})
+router.post(
+  "/api/inventory",
+  checkSchema(createinventorySchema),
+  async (req, res) => {
+    const { body } = req;
+    const result = validationResult(req);
+    console.log(result);
+    if (!result.isEmpty()) {
+      return res.status(400).send({ errors: result.array() });
+    }
+    try {
+      const inventory = new Inventory(body);
+      const newInventory = await inventory.save();
+      res.send(newInventory).status(201);
+    } catch (err) {
+      console.log(err);
+      res.send(err.message).status(500);
+    }
+  }
+);
 
-router.post("api/inventory",checkSchema(createinventorySchema), async(req,res)=>{
-    const {body}=req
-    const result=validationResult(req)
-    console.log(result)
-    if(!result.isEmpty()){
-        return res.status(400).send({errors:result.array()})
+router.patch("/api/inventory/:id", async (req, res) => {
+  const {
+    body,
+    params: { id },
+  } = req;
+  try {
+    const inventory = await Inventory.findByIdAndUpdate(id, body, {
+      new: true,
+    });
+    if (!inventory) {
+      res.send("Not found").status(404);
     }
-    try{
-        const inventory=new Inventory(body)
-        const newInventory=await inventory.save()
-        res.send(newInventory).status(201)
-    }
-    catch(err){
-        console.log(err)
-        res.send(err.message).status(500)
-    }
-})
+    else res.send(inventory).status(200);
+  } catch (err) {
+    console.log(err);
+    res.send(err).status(400);
+  }
+});
 
-router.patch("api/inventory/:id",async(req,res)=>{
-    const {body,params:{id}}=req
-    try{
-        const inventory=await Inventory.findByIdAndUpdate(id,body,{new:true})
-        res.send(inventory).status(200)
-    if(!inventory){
-        res.send("Not found").status(404)
+router.put("/api/inventory/:id", async (req, res) => {
+  const {
+    body,
+    params: { id },
+  } = req;
+  try {
+    const inventory = await Inventory.findByIdAndUpdate(id, body, {
+      new: true,
+    });
+    
+    if (!inventory) {
+      res.send("Not found").status(404);
     }
+    else res.send(inventory).status(200);
+  } catch (err) {
+    console.log(err);
+    res.send(err).status(400);
+  }
+});
+
+router.delete("/api/inventory/:id", async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  try {
+    const deleted = await Inventory.findByIdAndDelete(id);
+    if (!deleted) {
+      res.send("Not found").status(404);
     }
-    catch(err){
-        console.log(err)
-        res.send(err).status(400)
+    else{
+        res.send(`deleted inventory with id ${id}`).status(200)
     }
-})
-router.delete("api/inventory/:id",async(req,res)=>{
-    const {params:{id}}=req
-    try{
-        const deleted=await Inventory.findByIdAndDelete(id)
-        if(!deleted){
-            res.send("Not found").status(404)
-        }
-    }
-    catch(err){
-        console.log(err)
-        res.send(err).status(400)
-    }
-})
+  } catch (err) {
+    console.log(err);
+    res.send(err).status(400);
+  }
+});
 
 export default router;

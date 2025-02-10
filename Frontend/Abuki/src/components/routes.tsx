@@ -7,13 +7,17 @@ import App from "../App";
 import SoldPage from "../pages/SolddPage";
 import PresentPage from "../pages/InventoryPage";
 import BoughtPage from "../pages/BoughtPage";
+import InventoryPage from "../pages/InventoryPage";
+import InventoryForm from "./InventoryForm";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      { path: "/present", element: <Present /> },
+      { path: "/present", element: <InventoryPage /> },
+      { path: "/InventoryForm", element: <InventoryForm /> },
+      { path: "/InventoryForm/:id", element: <InventoryForm /> },
       { path: "/bought", element: <Bought /> },
       { path: "/dashboard", element: <Dashboard /> },
       { path: "/sold", element: <Sold /> },

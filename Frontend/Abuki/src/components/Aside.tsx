@@ -1,15 +1,22 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 const Aside = () => {
   return (
-    <div>
-      <Link to="/dashboard"><button>Dashboard</button></Link>
-      <Link to="/present"><button>Present</button></Link>
-      <Link to="/bought"><button>Bought</button></Link>
-      <Link to="/sold"><button>Sold</button></Link>
-    </div>
-  )
-}
+    <ul>
+      <li>
+        <Link to="/dashboard">Dashboard</Link>
+      </li>
+      <li>
+        <Link to="/present">Present</Link>
+      </li>
+      <li>
+        <Link to="/bought">Bought</Link>
+      </li>
+      <li>
+        <Link to="/sold">Sold</Link>
+      </li>
+    </ul>
+  );
+};
 
-export default Aside
+export default Aside;
