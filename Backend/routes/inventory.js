@@ -2,10 +2,21 @@ import { Router } from "express";
 import Inventory from "../models/inventoryModel.js";
 import { body, validationResult, checkSchema } from "express-validator";
 import { createinventorySchema } from "../Schemas/inventorySchema.js";
-
+import {loginMiddleware} from "./login.js"
+import session from "express-session";
 const router = Router();
+router.use(
+  session({
+    secret: "asojghpghpsogjakd",
+    saveUnitialized: false,
+    resave: false,
+    cookie: {
+      maxAge: 60000,
+    },
+  })
+);
 
-router.get("/api/inventory", async (req, res) => {
+router.get("/api/inventory", loginMiddleware, async (req, res) => {
   try {
     const inventory = await Inventory.find();
     res.status(200).json(inventory);
@@ -14,7 +25,7 @@ router.get("/api/inventory", async (req, res) => {
   }
 });
 
-router.get("/api/inventory/:id", async (req, res) => {
+router.get("/api/inventory/:id",async (req, res) => {
   const {
     params: { id },
   } = req;

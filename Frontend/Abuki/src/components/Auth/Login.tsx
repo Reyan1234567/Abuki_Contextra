@@ -11,14 +11,15 @@ interface Props{
 
 const Login = ({Submit}:Props) => {
 
-    
+  
   const {
     register,
     handleSubmit,
-    formState: {isValid },
+    formState: {isValid, errors},
   } =useForm();
+
   return (
-    <form onSubmit={handleSubmit((data)=>Submit(data))} className="container p-5 h-100 d-flex flex-column justify-content-center align-items-center bg-light" style={{ backgroundColor: "#f8f9fa", borderRadius: "8px", boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)" }}>
+    <form onSubmit={handleSubmit((data)=>Submit(data as auth))} className="container p-5 h-100 d-flex flex-column justify-content-center align-items-center bg-light" style={{ backgroundColor: "#f8f9fa", borderRadius: "8px", boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)" }}>
       <div className="mb-3 w-100">
       <label className="form-label" htmlFor="username">
         Username:
@@ -29,8 +30,8 @@ const Login = ({Submit}:Props) => {
         type="text"
         id="username"
         name="username"
-        required
       />
+      {errors.username&&<p className="text-danger">Username is required</p>}
       </div>
       <div className="mb-3 w-100">
       <label className="form-label" htmlFor="password">
@@ -42,10 +43,10 @@ const Login = ({Submit}:Props) => {
         type="password"
         id="password"
         name="password"
-        required
       />
+      {errors.password&&<p className="text-danger">Password is required</p>}
       </div>
-      <button disabled={!isValid} className="btn btn-primary mt-3" type="submit">
+      <button className="btn btn-warning mt-3 text-black" type="submit">
       Login
       </button>
     </form>
@@ -53,3 +54,5 @@ const Login = ({Submit}:Props) => {
 };
 
 export default Login;
+
+// disabled={!isValid}

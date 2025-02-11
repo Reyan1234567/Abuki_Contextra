@@ -9,8 +9,10 @@ import PresentPage from "../pages/InventoryPage";
 import BoughtPage from "../pages/BoughtPage";
 import InventoryPage from "../pages/InventoryPage";
 import InventoryForm from "./InventoryForm";
+import LoginPage from "../pages/LoginPage";
 
 const router = createBrowserRouter([
+  { path: "/login", element: <LoginPage/> },
   {
     path: "/",
     element: <App />,
