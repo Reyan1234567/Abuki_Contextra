@@ -2,28 +2,25 @@ import { Router } from "express";
 import Login from "../models/loginModel.js";
 import { createLoginSchema } from "../Schemas/loginSchema.js";
 import { body, validationResult, checkSchema } from "express-validator";
-import session from "express-session";
-import bcrypt from "bcrypt";
+// import session from "express-session";
 import passport from "passport"
+// import MongoStore from "connect-mongo"
+import mongoose from "mongoose"
 import "../Strategies/localStrategies.js"
+import dotenv from "dotenv"
 
+dotenv.config()
 const router = Router();
-router.use(
-  session({
-    secret: "asojghpghpsogjakd",
-    saveUnitialized: false,
-    resave: false,
-    cookie: {
-      maxAge: 60000,
-    },
-  })
-);
-
-router.use(passport.initialize())
-router.use(passport.session())
 
 
-router.post("/login",passport.authenticate("local"),(req,res)=>{
+// router.use(passport.initialize())
+// router.use(passport.session())
+
+
+router.post("/login",checkSchema(createLoginSchema),passport.authenticate("local"),(req,res)=>{
+const result=validationResult(req)
+if(!result.isEmpty()) return res.status(500).send("Error: ", result.array())
+
 res.sendStatus(200)
 })
 // router.post("/login", checkSchema(createLoginSchema), async (req, res) => {
@@ -54,11 +51,5 @@ res.sendStatus(200)
   
 // });
 
-export const loginMiddleware = (req, res, next) => {
-  if (req.session.user.id) {
-    next();
-  } else {
-    res.send("Not found").status(400);
-  }
-};
-export default router;
+
+export default router

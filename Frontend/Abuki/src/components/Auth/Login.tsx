@@ -7,9 +7,10 @@ interface auth{
 
 interface Props{
     Submit:(data:auth)=>void;
+    anError:boolean;
 }
 
-const Login = ({Submit}:Props) => {
+const Login = ({Submit, anError}:Props) => {
 
   
   const {
@@ -46,9 +47,11 @@ const Login = ({Submit}:Props) => {
       />
       {errors.password&&<p className="text-danger">Password is required</p>}
       </div>
+      {anError&&<p className="text-danger">Incorrect Credentials</p>}
       <button className="btn btn-warning mt-3 text-black" type="submit">
       Login
       </button>
+      
     </form>
   );
 };

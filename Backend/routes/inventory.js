@@ -2,7 +2,7 @@ import { Router } from "express";
 import Inventory from "../models/inventoryModel.js";
 import { body, validationResult, checkSchema } from "express-validator";
 import { createinventorySchema } from "../Schemas/inventorySchema.js";
-import {loginMiddleware} from "./login.js"
+// import {loginMiddleware} from "../middleware/Authmiddleware.js"
 import session from "express-session";
 const router = Router();
 router.use(
@@ -15,9 +15,18 @@ router.use(
     },
   })
 );
+const loginMiddleware = (req, res, next) => {
+  if (req.session.passport.user) {
+  next();
+  } else {
 
-router.get("/api/inventory", loginMiddleware, async (req, res) => {
+    console.log(req.session.passport.user)
+    res.status(401).send("Not Authorized");
+  }
+};
+router.get("/api/inventory",loginMiddleware, async (req, res) => {
   try {
+    console.log(req.user)
     const inventory = await Inventory.find();
     res.status(200).json(inventory);
   } catch (err) {
@@ -119,5 +128,7 @@ router.delete("/api/inventory/:id", async (req, res) => {
     res.send(err).status(400);
   }
 });
+
+
 
 export default router;
