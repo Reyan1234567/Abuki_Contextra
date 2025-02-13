@@ -1,0 +1,16 @@
+.nav{
+    display: flex;
+    justify-content: space-between;
+    padding:10px 20px;
+}
+.logo-cont{
+    display: flex;
+}
+.imga{
+    margin-left: 15px;
+}
+button{
+    border:black solid 1px;
+    border-radius:3px;
+    background-color:white
+}
