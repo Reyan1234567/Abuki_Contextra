@@ -1,17 +1,16 @@
+import { useContext } from "react";
 import img from "../assets/abuki.png";
 import "./Nav.css"
+import { CollapsedContext } from "../App";
 
-interface Props{
-  // isCollapsed:boolean;
-  changeCollapsed:()=>void
-}
-const Navbar = ({changeCollapsed}:Props) => {
+
+const Navbar = () => {
   // const[isCollapsed, setisCollapsed]=useState(true)
-
+  const changeCollapsed=useContext(CollapsedContext)
   return (
     <nav className="nav">
       <div className="logo-cont">
-        <button onClick={changeCollapsed}><svg
+        <button onClick={changeCollapsed.changeCollapsed}><svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 448 512"
           style={{ display:"block",padding:"1px",width: "30px", height: "30px" }}

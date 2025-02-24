@@ -1,13 +1,16 @@
 import { Link } from "react-router-dom";
 import "./Aside.css";
+import { CollapsedContext } from "../../App";
+import { useContext } from "react";
 
-interface Props{
-  isCollapsed:boolean
-}
+// interface Props{
+//   isCollapsed:boolean
+// }
 
-const Aside = ({isCollapsed}:Props) => {
+const Aside = () => {
+  const isCollapsed=useContext(CollapsedContext)
   return (
-    <ul className={isCollapsed?"aside-list":"contracted"}>
+    <ul className={isCollapsed.isCollapsed?"aside-list":"contracted"}>
       <li className="aside-item">
         <Link to="/dashboard">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"  >
