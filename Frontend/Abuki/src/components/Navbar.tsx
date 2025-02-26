@@ -2,21 +2,23 @@ import { useContext } from "react";
 import img from "../assets/abuki.png";
 import "./Nav.css"
 import { CollapsedContext } from "../App";
+import {useCollapse}  from "./Zustand/store.ts"
 
 
 const Navbar = () => {
   // const[isCollapsed, setisCollapsed]=useState(true)
-  const changeCollapsed=useContext(CollapsedContext)
+  const change=useCollapse((state)=>state.change)
+  // const changeCollapsed=useContext(CollapsedContext)
   return (
     <nav className="nav">
       <div className="logo-cont">
-        <button onClick={changeCollapsed.changeCollapsed}><svg
+      <button onClick={change}><svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 448 512"
           style={{ display:"block",padding:"1px",width: "30px", height: "30px" }}
-        >
-          <path d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z" />
+        >          <path d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z" />
         </svg></button>
+
         <div className="logo-cont">
           <img className="imga" src={img} alt="" style={{ width: "55px", height: "30px" }} />
         </div>
